@@ -1,0 +1,66 @@
+﻿@model List<AvansedFood.Web.ViewModels.PackageViewModel>
+@{
+    ViewData["Title"] = "Alle Pakketten - Alle Kantines";
+}
+
+<div class="pakketen">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Alle Pakketten (Alle Kantines)</h1>
+        <a asp-action="Index" class="btn btn-secondary">← Terug naar Mijn Kantine</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Naam</th>
+                        <th>Kantine</th>
+                        <th>Stad</th>
+                        <th>Type</th>
+                        <th>Ophaaltijd</th>
+                        <th>Prijs</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var package in Model)
+                    {
+                        <tr>
+                            <td>
+                                @package.Name
+                                @if (package.Is18Plus)
+                                {
+                                    <span class="badge bg-warning text-dark">18+</span>
+                                }
+                            </td>
+                            <td>@package.CanteenName</td>
+                            <td>@package.City</td>
+                            <td>@package.MealType</td>
+                            <td>@package.PickupTime.ToString("dd-MM-yyyy HH:mm")</td>
+                            <td>€@package.Price.ToString("F2")</td>
+                            <td>
+                                @if (package.IsReserved)
+                                {
+                                    <span class="badge bg-success">Gereserveerd</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Beschikbaar</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h4>Geen pakketten beschikbaar</h4>
+            <p>Er zijn momenteel geen pakketten in het systeem.</p>
+        </div>
+    }
+</div>

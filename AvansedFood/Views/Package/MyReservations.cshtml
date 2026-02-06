@@ -1,0 +1,53 @@
+﻿@model List<AvansedFood.Web.ViewModels.PackageViewModel>
+@{
+    ViewData["Title"] = "Mijn Reserveringen";
+}
+
+<div class="pakketen">
+    <h1>Mijn Reserveringen:</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-3 justify-content-center">
+
+            @if (Model.Any())
+            {
+                @foreach (var package in Model)
+                {
+                    <div class="card col-4 m-2">
+                        <div class="card-body">
+                            <h5 class="card-title">@package.Name</h5>
+                            <span class="badge bg-success">Gereserveerd</span>
+                            @if (package.Is18Plus)
+                            {
+                                <h2>18+</h2>
+                            }
+                            <br>
+                            <p class="summary">€@package.Price.ToString("F2")</p><br>
+                            <p>@package.CanteenName</p><br>
+                            <p>@package.PickupTime.ToString("dd-MM-yyyy HH:mm") - @package.ExpirationTime.ToString("HH:mm")</p><br>
+                            <p>Type pakket: @package.MealType</p>
+
+                            <a asp-controller="Package" asp-action="Details" asp-route-id="@package.PackageId">
+                                <button class="secondary-button">Details</button>
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <h4>Nog geen reserveringen</h4>
+                    <p>Je hebt nog geen pakketten gereserveerd.</p>
+                    <a asp-action="Index" class="btn btn-primary">Bekijk beschikbare pakketten</a>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

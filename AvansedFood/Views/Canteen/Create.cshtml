@@ -1,0 +1,144 @@
+﻿@model AvansedFood.Web.ViewModels.CreatePackageViewModel
+@{
+    ViewData["Title"] = "Nieuw Pakket Aanmaken";
+}
+
+<div class="container mt-4">
+    <h1>Nieuw Pakket Aanmaken</h1>
+    <a asp-action="Index" class="btn btn-secondary mb-3">← Terug naar Overzicht</a>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Naam van het Pakket</label>
+                            <input asp-for="Name" class="form-control" placeholder="Bijv. Lunch Deal, Avondpakket" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="City" class="form-label">Stad</label>
+                                <select asp-for="City" class="form-select" asp-items="Html.GetEnumSelectList<Domain.Models.City>()">
+                                    <option value="">Selecteer Stad</option>
+                                </select>
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="MealType" class="form-label">Type Maaltijd</label>
+                                <select asp-for="MealType" class="form-select" asp-items="Html.GetEnumSelectList<Domain.Models.MealType>()">
+                                    <option value="">Selecteer Type</option>
+                                </select>
+                                <span asp-validation-for="MealType" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CanteenId" class="form-label">Kantine</label>
+                            <select asp-for="CanteenId" class="form-select">
+                                <option value="">Selecteer Kantine</option>
+                                @foreach (var canteen in Model.AvailableCanteens)
+                                {
+                                    <option value="@canteen.CanteenId">@canteen.City - @canteen.Location @(canteen.OffersHotMeals ? "(Warme maaltijden)" : "")</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CanteenId" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PickupTime" class="form-label">Ophaaltijd</label>
+                                <input asp-for="PickupTime" type="datetime-local" class="form-control" />
+                                <span asp-validation-for="PickupTime" class="text-danger"></span>
+                                <small class="text-muted">Max 2 dagen vooruit</small>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ExpirationTime" class="form-label">Ophalen tot</label>
+                                <input asp-for="ExpirationTime" type="datetime-local" class="form-control" />
+                                <span asp-validation-for="ExpirationTime" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label">Prijs</label>
+                            <div class="input-group">
+                                <span class="input-group-text">€</span>
+                                <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Selecteer Producten (Voorbeeld Inhoud)</label>
+                            <small class="text-muted d-block mb-2">
+                                Kies producten die studenten een idee geven van de inhoud.
+                                Als er alcohol bij zit wordt het pakket automatisch 18+.
+                            </small>
+                            <div class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
+                                @foreach (var product in Model.AvailableProducts)
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="SelectedProductIds"
+                                               value="@product.ProductId"
+                                               id="product_@product.ProductId">
+                                        <label class="form-check-label" for="product_@product.ProductId">
+                                            @product.Name
+                                            @if (product.ContainsAlcohol)
+                                            {
+                                                <span class="badge bg-warning text-dark">🍺 Alcohol</span>
+                                            }
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <span asp-validation-for="SelectedProductIds" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">Pakket Aanmaken</button>
+                            <a asp-action="Index" class="btn btn-secondary">Annuleren</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5>Richtlijnen</h5>
+                    <ul>
+                        <li>Pakketten maximaal 2 dagen vooruit plannen</li>
+                        <li>Warme maaltijden alleen als je kantine dit ondersteunt</li>
+                        <li>Producten met alcohol = automatisch 18+ pakket</li>
+                        <li>Kies voorbeeldproducten voor indicatie</li>
+                    </ul>
+
+                    <hr />
+
+                    <h5>💡 Tips</h5>
+                    <ul>
+                        <li>Gebruik duidelijke namen</li>
+                        <li>Plan ophaaltijden realistisch</li>
+                        <li>Prijs attractief houden</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

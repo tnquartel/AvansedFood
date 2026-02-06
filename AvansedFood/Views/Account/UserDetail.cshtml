@@ -1,0 +1,58 @@
+﻿@model AvansedFood.Web.ViewModels.UserDetailViewModel
+@{
+    ViewData["Title"] = "Mijn Account";
+}
+
+<div class="user-detail">
+    <h1>Mijn Account</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h3>Account Informatie</h3>
+
+            <table class="table">
+                <tr>
+                    <th>Email:</th>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <th>Type account:</th>
+                    <td>
+                        @if (Model.Role == "Student")
+                        {
+                            <span class="badge bg-primary">Student</span>
+                        }
+                        else if (Model.Role == "CanteenEmployee")
+                        {
+                            <span class="badge bg-success">Kantinemedewerker</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@Model.Role</span>
+                        }
+                    </td>
+                </tr>
+            </table>
+
+            @if (Model.Role == "Student")
+            {
+                <a asp-controller="Package" asp-action="MyReservations" class="btn btn-primary">
+                    Mijn Reserveringen
+                </a>
+            }
+            else if (Model.Role == "CanteenEmployee")
+            {
+                <a asp-controller="Canteen" asp-action="Index" class="btn btn-success">
+                    Mijn Pakketten Beheren
+                </a>
+            }
+
+            <hr class="my-4" />
+
+            <form asp-action="Logout" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">Uitloggen</button>
+            </form>
+        </div>
+    </div>
+</div>

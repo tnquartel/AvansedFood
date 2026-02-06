@@ -1,0 +1,86 @@
+﻿@model List<AvansedFood.Web.ViewModels.PackageViewModel>
+@{
+    ViewData["Title"] = "Mijn Kantine Pakketten";
+}
+
+<div class="pakketen">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Mijn Kantine Pakketten</h1>
+        <div>
+            <a asp-action="Create" class="btn btn-success">+ Nieuw Pakket</a>
+            <a asp-action="AllPackages" class="btn btn-outline-primary">Alle Kantines</a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive mt-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Type</th>
+                        <th>Ophaaltijd</th>
+                        <th>Prijs</th>
+                        <th>Status</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var package in Model)
+                    {
+                        <tr>
+                            <td>
+                                @package.Name
+                                @if (package.Is18Plus)
+                                {
+                                    <span class="badge bg-warning">18+</span>
+                                }
+                            </td>
+                            <td>@package.MealType</td>
+                            <td>@package.PickupTime.ToString("dd-MM-yyyy HH:mm")</td>
+                            <td>€@package.Price.ToString("F2")</td>
+                            <td>
+                                @if (package.IsReserved)
+                                {
+                                    <span class="badge bg-success">Gereserveerd</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Beschikbaar</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!package.IsReserved)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@package.PackageId" class="btn btn-sm btn-primary">Bewerk</a>
+                                    <form asp-action="Delete" asp-route-id="@package.PackageId" method="post" class="d-inline"
+                                          onsubmit="return confirm('Weet je zeker dat je dit pakket wilt verwijderen?');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-danger">Verwijder</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info mt-4">
+            <h4>Nog geen pakketten</h4>
+            <p>Je hebt nog geen pakketten aangemaakt. Klik op "Nieuw Pakket" om te beginnen!</p>
+        </div>
+    }
+</div>

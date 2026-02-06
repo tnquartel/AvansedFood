@@ -1,0 +1,78 @@
+﻿@model AvansedFood.Web.ViewModels.PackageListViewModel
+@{
+    ViewData["Title"] = "Pakketten";
+}
+
+<div class="pakketen">
+    <h1>Pakketten:</h1>
+
+    <div class="card mb-4 p-3">
+        <form asp-action="Index" method="get" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Filter op Stad:</label>
+                <select name="city" class="form-select">
+                    <option value="">Alle Steden</option>
+                    @foreach (var city in Model.AvailableCities)
+                    {
+                        <option value="@city" selected="@(Model.SelectedCity == city)">@city</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Filter op Type:</label>
+                <select name="mealType" class="form-select">
+                    <option value="">Alle Types</option>
+                    @foreach (var mealType in Model.AvailableMealTypes)
+                    {
+                        <option value="@mealType" selected="@(Model.SelectedMealType == mealType)">@mealType</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary me-2">Filteren</button>
+                <a asp-action="Index" class="btn btn-secondary">Reset</a>
+            </div>
+        </form>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-3 justify-content-center">
+            @foreach (var package in Model.Packages)
+            {
+                <div class="card col-4 m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">@package.Name</h5>
+                        @if (package.Is18Plus)
+                        {
+                            <h2>18+</h2>
+                        }
+                        <br>
+                        <p class="summary">€@package.Price.ToString("F2")</p><br>
+                        <p>@package.CanteenName</p><br>
+                        <p>@package.PickupTime.ToString("dd-MM-yyyy HH:mm") - @package.ExpirationTime.ToString("HH:mm")</p><br>
+                        <p>Type pakket: @package.MealType</p>
+
+                        <a asp-controller="Package" asp-action="Details" asp-route-id="@package.PackageId">
+                            <button class="secondary-button">Details</button>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

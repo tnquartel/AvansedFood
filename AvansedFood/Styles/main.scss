@@ -1,0 +1,358 @@
+$background: #D2FFD2;
+$primary: #42ED2F;
+$secondary: #C6002A;
+$footer: #248019;
+$headertext: #103A0B;
+
+.primary-btn {
+    color: white;
+    background-color: $secondary;
+    border: 0px;
+    border-radius: 3px;
+}
+
+.button:hover {
+    filter: brightness(85%);
+}
+
+.primary-btn:hover {
+    filter: brightness(85%);
+}
+
+.secondary-button {
+    color: $background;
+    background-color: $footer;
+    border: 0px;
+    border-radius: 3px;
+}
+
+.secondary-button:hover {
+    filter: brightness(85%);
+}
+
+.home {
+    .banner {
+        width: 100%;
+        height: 150px;
+    }
+
+    color: $headertext;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+        color: $secondary;
+        margin-top: 10px;
+    }
+
+    button {
+        margin-top: 20px;
+        width: 264px;
+        height: 60px;
+    }
+
+    .button:hover {
+        filter: brightness(85%);
+    }
+}
+
+.pakket {
+    img {
+        margin-top: 10px;
+        width: 200px;
+        height: 66px;
+    }
+
+    button {
+        width: 165px;
+        height: 38px;
+    }
+
+    .button:hover {
+        filter: brightness(85%);
+    }
+
+    .card {
+        margin-top: 10px;
+        background-color: $primary;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        height: 60px;
+
+        h3 {
+            display: inline;
+        }
+    }
+
+    color: $headertext;
+
+    .row {
+        margin-top: 15px;
+    }
+}
+
+.user-detail {
+    .card {
+        background-color: $primary;
+        color: $headertext;
+        margin-top: 20px;
+        margin-left: 4px;
+        margin-right: 4px;
+        border-radius: 20px;
+
+        p {
+            margin-bottom: 2px;
+        }
+
+        h2 {
+            float: right;
+            color: $secondary;
+        }
+
+        .secondary-button {
+            padding {
+                left: 7px;
+                right: 7px;
+            }
+
+            margin-top: 4px;
+            border-radius: 5px;
+        }
+
+        .secondary-button:hover {
+            filter: brightness(85%);
+        }
+    }
+}
+
+.pakketen {
+    padding-bottom: 100px;
+    column-gap: 3px;
+
+    h1 {
+        align-items: center;
+        text-align: center;
+        margin-top: 10px;
+        color: $secondary;
+    }
+
+    color: $headertext;
+
+    .container {
+        display: flex;
+        column-gap: 10px;
+    }
+
+    .card {
+        background-color: $primary;
+        color: $headertext;
+        margin-top: 20px;
+        margin-left: 4px;
+        margin-right: 4px;
+        border-radius: 20px;
+
+        p {
+            margin-bottom: 2px;
+            display: inline;
+        }
+
+        h5, h2 {
+            display: inline;
+        }
+
+        h2 {
+            float: right;
+            color: $secondary;
+        }
+
+        .secondary-button {
+            display: inline;
+            float: right;
+
+            padding {
+                left: 7px;
+                right: 7px;
+            }
+
+            border-radius: 5px;
+        }
+
+        .secondary-button:hover {
+            filter: brightness(85%);
+        }
+    }
+}
+
+.index {
+    color: $secondary;
+    align-items: center;
+    text-align: center;
+    margin-top: 10%;
+
+    .primary-btn {
+        width: 200px;
+        height: 40px;
+        margin-top: 20px;
+    }
+
+    .primary-btn:hover {
+        filter: brightness(85%);
+    }
+
+    p {
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    input.form-control {
+        width: 400px;
+        display: block;
+        margin: 0 auto 10px auto;
+    }
+}
+
+.pakket-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+#header, header {
+    background-color: $primary;
+    color: $headertext;
+}
+
+#hold-footer {
+    padding-top: 10px;
+}
+
+footer {
+    background-color: $footer;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: $background;
+
+    .container {
+        margin: {
+            top: 15px;
+            bottom: 15px;
+        }
+
+        align-items: center;
+        text-align: center;
+
+        #footer-e1 {
+            width: 33%;
+
+            a, a:hover, a:visited {
+                color: $background;
+            }
+        }
+
+        #footer-e2 {
+            width: 33%;
+            align-items: center;
+
+            h3 {
+                padding: 0px;
+                text-align: center;
+                align-items: center;
+            }
+
+            h1 {
+                padding-left: 5px;
+                padding-right: 5px;
+                padding-top: 10px;
+                padding-bottom: 5px;
+            }
+        }
+
+        #footer-e3 {
+            width: 33%;
+
+            h5, p {
+                display: inline;
+                vertical-align: top;
+            }
+
+            h5 {
+                padding-right: 5px;
+                margin-top: 10px;
+            }
+
+            .more-padding {
+                padding-right: 10px;
+            }
+
+            .padding {
+                padding-bottom: 5px;
+            }
+        }
+    }
+}
+
+body {
+    background-color: $background;
+    margin: 0px;
+}
+
+
+header {
+    #header-e1 {
+        #logo {
+            width: 80px;
+            height: auto;
+        }
+
+        float: left;
+
+        padding: {
+            left: 45px;
+            top: 10px;
+            bottom: 10px;
+        }
+
+        width: 10%;
+    }
+
+    #header-e2 {
+        float: left;
+        width: 80%;
+
+        h1 {
+            font-size: 3.5em;
+            text-align: center;
+        }
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #header-e3 {
+        float: right;
+        width: 10%;
+
+        h1 {
+            margin: 0px;
+            float: right;
+            padding-top: 25px;
+        }
+
+        .fa-user {
+            color: $secondary;
+        }
+    }
+
+    .container {
+        padding: 0px;
+        margin: 0px !important;
+        max-width: 99%;
+    }
+}

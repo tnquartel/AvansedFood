@@ -1,0 +1,68 @@
+﻿@model AvansedFood.Web.ViewModels.PackageViewModel
+@{
+    ViewData["Title"] = "Pakket details";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="pakket">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-7">
+                <h1>@Model.Name</h1>
+                <h2>€@Model.Price.ToString("F2")</h2>
+
+                <h4>Locatie: @Model.CanteenName</h4>
+                <h4>Datum en tijd: @Model.PickupTime.ToString("dd-MM-yyyy HH:mm") - @Model.ExpirationTime.ToString("HH:mm")</h4>
+                <h4>Type pakket: @Model.MealType</h4>
+
+                @if (Model.Is18Plus)
+                {
+                    <img src="~/images/nix18.png" alt="nix18" class="img-fluid mb-3">
+                }
+
+                @if (!Model.IsReserved)
+                {
+                    <form asp-action="Reserve" asp-route-id="@Model.PackageId" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="secondary-button">Reserveer pakket</button>
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        <strong>Dit pakket is al gereserveerd</strong>
+                    </div>
+                }
+            </div>
+
+            <div class="col-5">
+                <h4>Mogelijke producten:</h4>
+
+                @foreach (var product in Model.Products)
+                {
+                    <div class="card p-2 mb-2">
+                        <h3>@product.Name</h3>
+                        @if (product.ContainsAlcohol)
+                        {
+                            <span class="badge bg-warning">Bevat alcohol</span>
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
